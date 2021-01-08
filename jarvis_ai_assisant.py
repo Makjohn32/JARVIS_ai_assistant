@@ -15,7 +15,7 @@ import datetime
 import time 
 import wikipedia
 import send2trash
-
+import subprocess
 
 engine = pyttsx3.init()
 newVoiceRate = 145
@@ -48,7 +48,7 @@ def my_command():
     return command
     engine.say("")
 	
-edge_path = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe %s"
+edge_path = "C:\msedge.exe %s"
 
 #All the commands included here
 if __name__ == "__main__":
