@@ -20,18 +20,21 @@ import subprocess
 engine = pyttsx3.init()
 newVoiceRate = 145
 engine.setProperty('rate',newVoiceRate)
+
+def speak(text):
+    engine.say(text)
+    engine.runAndWait()
+
+
 # Make the computer welcome depends on the time
 
 dt = datetime.datetime.now()
 if datetime.time(12) > dt.time() :
-    engine.say("Good Morning sir")
-    engine.runAndWait() 
+    speak("Good morning sir")
 elif dt.time() <= datetime.time(18): 
-    engine.say("Good afternoon sir")
-    engine.runAndWait()
+    speak("Good afternoon sir")
 else:
-    engine.say("Good evening sir")
-    engine.runAndWait()
+    speak("Good evening sir")
 
 
 def listen():
@@ -47,8 +50,7 @@ def listen():
 time.sleep(1)
 #Ask for commands
 def my_command():
-    engine.say("I am waiting for you")
-    engine.runAndWait()
+    speak("I am waiting for you")
     r = sr.Recognizer()
     with sr.Microphone() as source:
         audio = r.listen(source)
@@ -57,7 +59,7 @@ def my_command():
     return command
     #engine.say("")
 	
-edge_path = "C:\msedge.exe %s"
+edge_path = "C:\msedgedriver.exe"
 
 #def send_email:
 
@@ -79,14 +81,8 @@ if __name__ == "__main__":
             elif "open gmail" in command:  
                 webbrowser.open("http://gmail.com")
             elif "find on youtube" in command:
-                engine.say("what do you want to search for sir")
-                engine.runAndWait()
+                speak("What do you want to search for sir?")
                 search_result = str(listen())
-                print (search_result)
-                '''r = sr.Recognizer()
-                with sr.Microphone() as source:
-                    a = r.listen(source)
-                    search_result = r.recognize_google(a)'''
                 driver = webdriver.Edge(edge_path)
                 driver.get("http://youtube.com")
                 time.sleep(8)
@@ -94,18 +90,15 @@ if __name__ == "__main__":
                 search_box.send_keys(search_result)
                 search_box.send_keys(Keys.RETURN)
             elif "wikipedia" in command:
-                engine.say("What do you want to search for sir?")
-                engine.runAndWait()
+                speak("What do you want to search for sir?")
                 r = sr.Recognizer()
                 with sr.Microphone() as source:
                     s = r.listen(source)
                     result = r.recognize_google(s)
                     wikresult = wikipedia.summary(result, sentences=2)
                     print(wikresult)
-                    engine.say(wikresult)
-                    engine.runAndWait()
-                    engine.say("Do you want the full results sir?")
-                    engine.runAndWait()
+                    speak(wikresult)
+                    speak("Do you want the foul results sir?")
                     ans = r.listen(source)
                     answer = r.recognize_google(ans)
                     if "yes" in answer:
@@ -114,14 +107,10 @@ if __name__ == "__main__":
                     else:
                         pass
             elif "google search" in command:
-                engine.say("what do you want to search for sir?")
-                engine.runAndWait()
+                speak("What do you want to search for sir?")
                 PATH = "C:\Program Files (x86)\msedgedriver.exe"
-                driver = webdriver.Edge(PATH)
-                r = sr.Recognizer()
-                with sr.Microphone() as source:
-                    s = r.listen(source)
-                    s_result = r.recognize_google(s)
+                driver = webdriver.Edge(edge_path)
+                s_result = listen()
                 driver.get("https://www.google.com")
                 search = driver.find_element_by_name("q")
                 search.send_keys(s_result)
