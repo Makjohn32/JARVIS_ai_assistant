@@ -34,9 +34,18 @@ else:
     engine.runAndWait()
 
 
+def listen():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        audio = r.listen(source)
+        wish = r.recognize_google(audio)
+        print(wish)
+    return wish
+   
+
 
 time.sleep(1)
-#Ask for commans
+#Ask for commands
 def my_command():
     engine.say("I am waiting for you")
     engine.runAndWait()
@@ -46,9 +55,12 @@ def my_command():
         command = r.recognize_google(audio)
         print(command)
     return command
-    engine.say("")
+    #engine.say("")
 	
 edge_path = "C:\msedge.exe %s"
+
+#def send_email:
+
 
 #All the commands included here
 if __name__ == "__main__":
@@ -59,6 +71,9 @@ if __name__ == "__main__":
             command = my_command().lower()
             if "open google" in command:
                  webbrowser.open("https://www.google.com")
+            elif "testing" in command:
+                text = listen()
+                print (text) 
             elif "open youtube" in command:
                  webbrowser.open("http://youtube.com")
             elif "open gmail" in command:  
@@ -66,12 +81,13 @@ if __name__ == "__main__":
             elif "find on youtube" in command:
                 engine.say("what do you want to search for sir")
                 engine.runAndWait()
-                PATH = "C:\Program Files (x86)\msedgedriver.exe"
-                driver = webdriver.Edge(PATH)
-                r = sr.Recognizer()
+                search_result = str(listen())
+                print (search_result)
+                '''r = sr.Recognizer()
                 with sr.Microphone() as source:
                     a = r.listen(source)
-                    search_result = r.recognize_google(a)
+                    search_result = r.recognize_google(a)'''
+                driver = webdriver.Edge(edge_path)
                 driver.get("http://youtube.com")
                 time.sleep(8)
                 search_box = driver.find_element_by_name("search_query")
@@ -84,7 +100,7 @@ if __name__ == "__main__":
                 with sr.Microphone() as source:
                     s = r.listen(source)
                     result = r.recognize_google(s)
-                    wikresult = wikipedia.summary(result, sentences=3)
+                    wikresult = wikipedia.summary(result, sentences=2)
                     print(wikresult)
                     engine.say(wikresult)
                     engine.runAndWait()
@@ -126,8 +142,8 @@ if __name__ == "__main__":
                 with open(file_name, "w") as f:
                     f.write(note)
                 subprocess.Popen(["notepad.exe", file_name])       
-            elif "delete file" in command:
-                engine.say("")
+         #   elif "send email" in command:
+        #      send_email()
             elif "go to sleep" in command:
                 engine.say("I'm gonna take a nap")
                 engine.runAndWait()
