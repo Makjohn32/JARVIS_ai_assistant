@@ -21,6 +21,8 @@ engine = pyttsx3.init()
 newVoiceRate = 145
 engine.setProperty('rate',newVoiceRate)
 
+edge_path = "C:\msedgedriver.exe"
+
 def speak(text):
     engine.say(text)
     engine.runAndWait()
@@ -57,11 +59,21 @@ def my_command():
         command = r.recognize_google(audio)
         print(command)
     return command
-    #engine.say("")
-	
-edge_path = "C:\msedgedriver.exe"
+    
 
-#def send_email:
+def send_email():
+    port = 465
+    password = str(input("Enter your password:"))
+    context = ssl.create_default_context()
+    if len(request['items']>0):
+        with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+            server.login("makjohn32@gmail.com", password)
+            message = str(input("Enter the message you want to send:"))
+            sender = "makjohn32@gmail.com"
+            receiver = str(input("Enter the message you want to send"))
+            server.sendmail(sender, receiver, message)
+            print ("Email sent...")
+            server.quit()
 
 
 #All the commands included here
@@ -88,21 +100,18 @@ if __name__ == "__main__":
                 search_box.send_keys(Keys.RETURN)
             elif "wikipedia" in command:
                 speak("What do you want to search for sir?")
-                r = sr.Recognizer()
-                with sr.Microphone() as source:
-                    s = r.listen(source)
-                    result = r.recognize_google(s)
-                    wikresult = wikipedia.summary(result, sentences=2)
+                result = str(listen())
+                wikresult = wikipedia.summary(result, sentences=2)
+                print(wikresult)
+                speak(wikresult)
+                speak("Do you want the foul results sir?")
+                ans = r.listen(source)
+                answer = r.recognize_google(ans)
+                if "yes" in answer:
+                    wikresult = wikipedia.summary(result)
                     print(wikresult)
-                    speak(wikresult)
-                    speak("Do you want the foul results sir?")
-                    ans = r.listen(source)
-                    answer = r.recognize_google(ans)
-                    if "yes" in answer:
-                        wikresult = wikipedia.summary(result)
-                        print(wikresult)
-                    else:
-                        pass
+                else:
+                    pass
             elif "google search" in command:
                 speak("What do you want to search for sir?")
                 PATH = "C:\Program Files (x86)\msedgedriver.exe"
@@ -128,8 +137,8 @@ if __name__ == "__main__":
                 with open(file_name, "w") as f:
                     f.write(note)
                 subprocess.Popen(["notepad.exe", file_name])       
-         #   elif "send email" in command:
-        #      send_email()
+            elif "send email" in command:
+                send_email()
             elif "go to sleep" in command:
                 engine.say("I'm gonna take a nap")
                 engine.runAndWait()
