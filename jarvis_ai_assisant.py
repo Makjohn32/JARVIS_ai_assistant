@@ -73,9 +73,6 @@ if __name__ == "__main__":
             command = my_command().lower()
             if "open google" in command:
                  webbrowser.open("https://www.google.com")
-            elif "testing" in command:
-                text = listen()
-                print (text) 
             elif "open youtube" in command:
                  webbrowser.open("http://youtube.com")
             elif "open gmail" in command:  
