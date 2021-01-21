@@ -1,0 +1,43 @@
+programming project ideas:
+
+	build a coding platform (like repl.it)
+	
+	build a website about coding(where I can post my job)
+
+	build an API with django 
+
+	learn about databases pyqt5 
+
+	master web scrapping
+
+	learn AI and computer vision 
+
+	learn testing
+
+	start learning cybersecurity
+
+	learn web development
+
+	update JARVIS
+
+	make an ecosystem with my devices
+
+	built a chat app that also has calling and screen sharing 
+
+	build a mini online game
+
+	make a programm that compress files
+
+	make my own os
+
+	make a robotic hands 
+
+	learn about automating visual tasks
+
+	make my own IDE for python
+
+	try to make a programm that automatically generates specific python code
+
+	master sockets and threading in python
+
+	build a programming tutorial platform 

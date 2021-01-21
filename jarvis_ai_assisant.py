@@ -4,18 +4,18 @@ import subprocess
 import webbrowser
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-'''from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC'''
 from bs4 import BeautifulSoup
 import requests
 import speech_recognition as sr
-#from gtts import gTTS
+from gtts import gTTS
 import datetime
 import time 
 import wikipedia
 import send2trash
-import subprocess
+import fbchat
+from getpass import getpass
+import smtplib
+import ssl
 
 engine = pyttsx3.init()
 newVoiceRate = 145
@@ -60,21 +60,35 @@ def my_command():
         print(command)
     return command
     
-
+#email function
 def send_email():
     port = 465
     password = str(input("Enter your password:"))
     context = ssl.create_default_context()
-    if len(request['items']>0):
-        with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
-            server.login("makjohn32@gmail.com", password)
-            message = str(input("Enter the message you want to send:"))
-            sender = "makjohn32@gmail.com"
-            receiver = str(input("Enter the message you want to send"))
-            server.sendmail(sender, receiver, message)
-            print ("Email sent...")
-            server.quit()
+    with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+        server.login("makjohn32@gmail.com", password)
+        message = str(input("Enter the message you want to send:"))
+        sender = "makjohn32@gmail.com"
+        receiver = str(input("Enter the person's email you want to sent the message:"))
+        server.sendmail(sender, receiver, message)
+        print ("Email sent...")
+    server.quit()
 
+#function for sending messages from messanger facebook
+def messanger():
+    username = str("Γιαννης Μακαρουνάς")
+    client = fbchat.Client(username, getpass())
+    speak("Do you want to send a message to one or more friend?")
+    answer = str(listen())
+    if "one" in answer:
+        speak("What is your friends name")
+        friend = str(input())
+        speak("Type the message you want to send")
+        msg = str(input())
+        sent = client.senMessage(msg, thread_id = friend.uid)
+        if sent:
+            print("Message sent successfully")
+            speak("Message sent")
 
 #All the commands included here
 if __name__ == "__main__":
@@ -139,6 +153,8 @@ if __name__ == "__main__":
                 subprocess.Popen(["notepad.exe", file_name])       
             elif "send email" in command:
                 send_email()
+            elif "messenger" in command:
+                messanger()    
             elif "go to sleep" in command:
                 engine.say("I'm gonna take a nap")
                 engine.runAndWait()
